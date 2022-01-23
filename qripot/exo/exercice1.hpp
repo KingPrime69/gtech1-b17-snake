@@ -11,7 +11,6 @@ class MainSDLWindow{
     ~MainSDLWindow();
     int Init(const char *title, int x, int y);
     SDL_Renderer *GetRenderer(void);
-    
 
     private:
     SDL_Window *window;
