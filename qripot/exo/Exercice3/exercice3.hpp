@@ -9,10 +9,14 @@ class MainSDLWindow{
     public:
     MainSDLWindow();
     ~MainSDLWindow();
-    int Init(const char *title, int x, int y, int w);
+    int Init(const char *title, int x, int y);
     SDL_Renderer *GetRenderer(void);
+    void Draw();
 
     private:
+    int X;
+    int Y;
+    int w;
     SDL_Window *window;
     SDL_Renderer *renderer;
 };

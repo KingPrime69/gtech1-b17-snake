@@ -8,13 +8,12 @@ MainSDLWindow::MainSDLWindow(){
     this->renderer = NULL;
 }
 
-MainSDLWindow::~MainSDLWindow(){
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-}
+int MainSDLWindow::Init(const char *title, int x, int y){
 
-int MainSDLWindow::Init(const char *title, int x, int y, int w){
+    X=200;
+    Y=200;
+    w=100;
+
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
        printf("Erreur d'initialisation de la SDL : %s",SDL_GetError());
        return EXIT_FAILURE;
@@ -34,11 +33,9 @@ int MainSDLWindow::Init(const char *title, int x, int y, int w){
         return EXIT_FAILURE;
     }
 
-    SDL_Surface *surface;
-    SDL_RenderPresent(renderer);
-    SDL_Rect rectangle =  {0,0,w,w};
-    SDL_RenderDrawRect(renderer, &rectangle);
-    SDL_BlitSurface(surface, &rectangle, NULL, NULL);
+    SDL_RenderClear(renderer);
+    Draw();
+
     return EXIT_SUCCESS;
 }
 
@@ -46,11 +43,24 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this ->renderer;
 }
 
+void MainSDLWindow::Draw(){
+    SDL_SetRenderDrawColor(renderer,255,0,0,255);
+    SDL_Rect rect = {X, Y, w, w};
+    SDL_RenderFillRect(renderer, &rect); 
+    SDL_RenderPresent(renderer);
+}
+
+MainSDLWindow::~MainSDLWindow(){
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
 int main(int argc, char *argv[]){
     MainSDLWindow *main_window;
     main_window = NULL;
     main_window = new MainSDLWindow();
-    main_window->Init("exercice 3", 600, 600, 100);
+    main_window->Init("exercice 3", 600, 600);
     
     SDL_Event e;
     for (;;) {
