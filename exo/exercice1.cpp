@@ -1,4 +1,4 @@
-#include "exercice3.hpp"
+#include "exercice-1.hpp"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,34 +35,24 @@ int MainSDLWindow::Init(const char *title, int x, int y){
         printf("Erreur lors de la creation d'un renderer : %s",SDL_GetError());
         return EXIT_FAILURE;
     }
-    Square();
     return EXIT_SUCCESS;
-
 }
 
 SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this ->renderer;
 }
 
-    
-void MainSDLWindow::Square(){
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255 );
-    SDL_Rect square{960,540,100,100};
-    SDL_RenderFillRect(renderer, &square);
-    SDL_RenderPresent(renderer);
-}
-
 int main(int argc, char *argv[]){
     MainSDLWindow *main_window;
     main_window = NULL;
     main_window = new MainSDLWindow();
-    main_window->Init("exercice 3", 1920, 1080);
+    main_window->Init("exercice 1", 500, 500);
+    
     SDL_Event e;
     for (;;) {
         SDL_PollEvent(&e);
         if (e.type == SDL_QUIT) {
             SDL_Log("Program quit after %i ticks", e.quit.timestamp);
-            printf("Je Voudrai un Bonhomme de Neige!");
             break;
         }
     }
