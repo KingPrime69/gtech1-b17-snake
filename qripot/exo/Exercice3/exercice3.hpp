@@ -12,8 +12,10 @@ class MainSDLWindow{
     int Init(const char *title, int x, int y);
     SDL_Renderer *GetRenderer(void);
     void Draw();
+    void Refresh();
 
     private:
+    int game;
     int X;
     int Y;
     int w;
