@@ -10,14 +10,15 @@ MainSDLWindow::MainSDLWindow(){
 
 int MainSDLWindow::Init(const char *title, int x, int y){
 
-    X=200;
-    Y=200;
-    w=100;
-
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
        printf("Erreur d'initialisation de la SDL : %s",SDL_GetError());
        return EXIT_FAILURE;
     }
+
+    X=260;
+    Y=260;
+    w=50;
+    game = 1;
 
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_RESIZABLE);
 
@@ -35,7 +36,6 @@ int MainSDLWindow::Init(const char *title, int x, int y){
 
     SDL_RenderClear(renderer);
     Draw();
-
     return EXIT_SUCCESS;
 }
 
@@ -44,10 +44,39 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
 }
 
 void MainSDLWindow::Draw(){
+    SDL_Event e;   
     SDL_SetRenderDrawColor(renderer,255,0,0,255);
     SDL_Rect rect = {X, Y, w, w};
-    SDL_RenderFillRect(renderer, &rect); 
-    SDL_RenderPresent(renderer);
+    while (game == 1){
+    const Uint8 *keystates = SDL_GetKeyboardState(NULL);
+
+        if (keystates[SDL_SCANCODE_UP]) {
+            rect.x++;
+        }
+        if (keystates[SDL_SCANCODE_DOWN]) {
+            rect.x--;
+        }
+        if (keystates[SDL_SCANCODE_LEFT]) {
+            rect.y++;
+        }
+        if (keystates[SDL_SCANCODE_RIGHT]) {
+            rect.y--;
+        }
+        SDL_RenderFillRect(renderer, &rect); 
+        SDL_RenderPresent(renderer);
+        for (;;) {
+            SDL_PollEvent(&e);
+            if (e.type == SDL_QUIT) {
+                SDL_Log("Program quit after %i ticks", e.quit.timestamp);
+                game = 0;
+                break;
+            }
+        }
+    }
+}
+
+void MainSDLWindow::Refresh(){
+
 }
 
 MainSDLWindow::~MainSDLWindow(){
@@ -62,14 +91,6 @@ int main(int argc, char *argv[]){
     main_window = new MainSDLWindow();
     main_window->Init("exercice 3", 600, 600);
     
-    SDL_Event e;
-    for (;;) {
-        SDL_PollEvent(&e);
-        if (e.type == SDL_QUIT) {
-            SDL_Log("Program quit after %i ticks", e.quit.timestamp);
-            break;
-        }
-    }
     if (main_window != NULL)
         delete main_window;
 }
