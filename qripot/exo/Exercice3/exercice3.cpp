@@ -8,6 +8,12 @@ MainSDLWindow::MainSDLWindow(){
     this->renderer = NULL;
 }
 
+MainSDLWindow::~MainSDLWindow(){
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
 int MainSDLWindow::Init(const char *title, int x, int y){
 
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
@@ -15,10 +21,11 @@ int MainSDLWindow::Init(const char *title, int x, int y){
        return EXIT_FAILURE;
     }
 
+    continuer = true;
     X=260;
     Y=260;
     w=50;
-    game = 1;
+    rect = {X, Y, w, w};
 
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_RESIZABLE);
 
@@ -44,53 +51,75 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
 }
 
 void MainSDLWindow::Draw(){
-    SDL_Event e;   
     SDL_SetRenderDrawColor(renderer,255,0,0,255);
-    SDL_Rect rect = {X, Y, w, w};
-    while (game == 1){
-    const Uint8 *keystates = SDL_GetKeyboardState(NULL);
+    SDL_RenderFillRect(renderer, &rect); 
+    SDL_BlitSurface(surface, NULL, surface, &rect);
+    SDL_RenderPresent(renderer);
+}
 
-        if (keystates[SDL_SCANCODE_UP]) {
-            rect.x++;
+void MainSDLWindow::verifKey(bool game){
+    SDL_Event(event);
+    SDL_PollEvent(&event);
+    if (event.type == SDL_QUIT) {
+        SDL_Log("Program quit after %i ticks", event.quit.timestamp);
+        continuer = false;
+    }
+
+    else if (event.type == SDL_KEYDOWN){   
+        if (event.key.keysym.sym==SDLK_UP) {
+            mouv("up");
         }
-        if (keystates[SDL_SCANCODE_DOWN]) {
-            rect.x--;
+        if (event.key.keysym.sym==SDLK_DOWN) {
+            mouv("down");
         }
-        if (keystates[SDL_SCANCODE_LEFT]) {
-            rect.y++;
+        if (event.key.keysym.sym==SDLK_LEFT) {
+            mouv("left");
         }
-        if (keystates[SDL_SCANCODE_RIGHT]) {
-            rect.y--;
+        if (event.key.keysym.sym==SDLK_RIGHT) {
+            mouv("right");
         }
-        SDL_RenderFillRect(renderer, &rect); 
-        SDL_RenderPresent(renderer);
-        for (;;) {
-            SDL_PollEvent(&e);
-            if (e.type == SDL_QUIT) {
-                SDL_Log("Program quit after %i ticks", e.quit.timestamp);
-                game = 0;
-                break;
-            }
-        }
+    }
+    else if(event.type == SDL_KEYUP){
+            mouv(NULL);
     }
 }
 
-void MainSDLWindow::Refresh(){
-
-}
-
-MainSDLWindow::~MainSDLWindow(){
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+void MainSDLWindow::mouv(const char *dir){
+    if(dir == "up"){
+        rect.y--;
+        Draw();
+        dir = NULL;
+    }
+    else if(dir == "down"){
+        rect.y++;
+        Draw();
+        dir = NULL;
+    }
+    else if(dir == "left"){
+        rect.x--;
+        Draw();
+        dir = NULL;
+    }
+    else if(dir == "right"){
+        rect.x++;
+        Draw();
+        dir = NULL;
+    }
+    else{
+        verifKey(true);
+    }
 }
 
 int main(int argc, char *argv[]){
     MainSDLWindow *main_window;
     main_window = NULL;
     main_window = new MainSDLWindow();
-    main_window->Init("exercice 3", 600, 600);
-    
+    main_window->Init("exercice 3", 1000, 1000);
+
+    while(main_window->continuer == true){
+        main_window->verifKey(true);
+    }
+
     if (main_window != NULL)
         delete main_window;
 }

@@ -12,13 +12,16 @@ class MainSDLWindow{
     int Init(const char *title, int x, int y);
     SDL_Renderer *GetRenderer(void);
     void Draw();
-    void Refresh();
+    void verifKey(bool game);
+    void mouv(const char *dir);
+    bool continuer;
 
     private:
-    int game;
     int X;
     int Y;
     int w;
+    SDL_Surface *surface;
+    SDL_Rect rect;
     SDL_Window *window;
     SDL_Renderer *renderer;
 };
