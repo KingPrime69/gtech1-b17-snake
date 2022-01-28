@@ -14,9 +14,14 @@ class MainSDLWindow{
     void Draw();
     void verifKey(bool game);
     void mouv(const char *dir);
+    void refresh();
     bool continuer;
 
     private:
+    Uint32 frame_time_interval;
+    Uint32 frame_time_start;
+    Uint32 frame_rate;
+    int speed;
     int X;
     int Y;
     int w;
