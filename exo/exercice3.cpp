@@ -47,9 +47,25 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     
 void MainSDLWindow::Square(){
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255 );
-    SDL_Rect square{960,540,100,100};
+    square{x,y,100,100};
     SDL_RenderFillRect(renderer, &square);
     SDL_RenderPresent(renderer);
+}
+
+void MainSDLWindow::keyboard(){
+  const Uint8 *keystates = SDL_GetKeyboardState(NULL);
+    if (keystates[SDL_SCANCODE_UP]) {
+        square.x+=10;
+    }
+    if (keystates[SDL_SCANCODE_DOWN]) {
+        square.x-=10;
+    }
+    if (keystates[SDL_SCANCODE_LEFT]) {
+        square.y-=10;
+    }
+    if (keystates[SDL_SCANCODE_RIGHT]) {
+        square.y+=10;
+    }
 }
 
 int main(int argc, char *argv[]){
