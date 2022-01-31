@@ -1,38 +1,32 @@
-#ifndef SNAKE_HPP
-#define SNAKE_HPP
+#pragma once
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-class Snake{
+class Snake {
     public:
     Snake();
     ~Snake();
     int InitSnake();
-    void Draw();
-    void verifKey(bool game);
     void mouv(const char *dir);
-    void refresh();
     void follow();
-    bool continuer;
-
-
-    private:
-    MainSDLWindow *main_window;
-    Apple *m_apple;
     SDL_Rect head;
     SDL_Rect body1;
     SDL_Rect body2;
+    SDL_Rect GetHead();
+    SDL_Rect GetBody();
+    
+    
+    int X;
+    int Y;
     int aX1; 
     int aY1;
     int aX;
     int aY;
-    int mX;
-    int mY;
+    bool ref;
+
+    private:
     int speed;
-    int X;
-    int Y;
     int w;
 };
-#endif

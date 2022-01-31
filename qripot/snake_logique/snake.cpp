@@ -6,15 +6,24 @@
 #include <iostream>
 
 Snake::Snake(){
-
+    head.h = 0;
+    head.w = 0;
+    head.x = 0;
+    head.y = 0;    
 }
 
 Snake::~Snake(){
+}
 
+SDL_Rect Snake::GetHead(){
+    return this->head;
+}
+
+SDL_Rect Snake::GetBody(){
+    return this->body1;
 }
 
 int Snake::InitSnake(){
-    continuer = true;
     X=650;
     Y=450;
     w=50;
@@ -23,3 +32,38 @@ int Snake::InitSnake(){
     body1 = {X, Y+50, w, w};
     body2 = {X, Y+100, w, w};
 }
+
+void Snake::mouv(const char *dir){
+    if(dir == "up"){
+        head.y-=speed;
+        body1.y = aY;
+        body1.x = aX;
+        body2.y = aY1;
+        body2.x = aX1;
+        ref = true;
+    }
+    else if(dir == "down"){
+        head.y+=speed;
+        body1.y = aY;
+        body1.x = aX;
+        body2.y = aY1;
+        body2.x = aX1;
+        ref = true;
+    }
+    else if(dir == "left"){
+        head.x-=speed;
+        body1.y = aY;
+        body1.x = aX;
+        body2.y = aY1;
+        body2.x = aX1;
+        ref = true;
+    }
+    else if(dir == "right"){
+        head.x+=speed;
+        body1.y = aY;
+        body1.x = aX;
+        body2.y = aY1;
+        body2.x = aX1;
+        ref = true;
+    }
+} 

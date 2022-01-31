@@ -6,7 +6,6 @@
 #include <iostream>
 
 Apple::Apple(){
-
 }
 
 Apple::~Apple(){
@@ -36,4 +35,8 @@ int Apple::InitApple(){
 
     pW = 25;
     apple = {distrX(eng)*50+12, distrY(eng)*50+12, pW, pW};
+}
+
+SDL_Rect Apple::GetApple(){ 
+    return this->apple;
 }

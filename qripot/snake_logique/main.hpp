@@ -1,9 +1,9 @@
-#ifndef MAIN_HPP
-#define MAIN_HPP
+#pragma once
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 
 class MainSDLWindow{
     public:
@@ -15,7 +15,5 @@ class MainSDLWindow{
 
 
     private:
-    Snake *main_snake;
     SDL_Window *window;
 };
-#endif
