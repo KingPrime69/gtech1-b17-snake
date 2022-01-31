@@ -1,4 +1,6 @@
 #include "main.hpp"
+#include "snake.cpp"
+#include "apple.cpp"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,42 +27,6 @@ int MainSDLWindow::Init(const char *title, int x, int y){
        return EXIT_FAILURE;
     }
 
-    
-
-    continuer = true;
-    X=650;
-    Y=450;
-    w=50;
-    speed = 50;
-    head = {X, Y, w, w};
-    body1 = {X, Y+50, w, w};
-    body2 = {X, Y+100, w, w};
-
-    using std::cout;
-    using std::endl;
-
-    constexpr int MIN_X = 1;
-    constexpr int MAX_X = 25;
-    constexpr int MIN_Y = 1;
-    constexpr int MAX_Y = 17;
-    constexpr int RAND_NUMS_TO_GENERATE = 1;
-
-    std::random_device rd;
-    std::default_random_engine eng(rd());
-    std::uniform_int_distribution<int> distrX(MIN_X, MAX_X);
-    std::uniform_int_distribution<int> distrY(MIN_Y, MAX_Y);
-
-    for (int n = 0; n < RAND_NUMS_TO_GENERATE; ++n) {
-        cout << distrX(eng) << "; ";
-        cout << distrY(eng) << "; ";
-    }
-    cout << endl;
-
-    pW = 25;
-    apple = {distrX(eng)*50+12, distrY(eng)*50+12, pW, pW};
-
-    printf("%d\n", distrX(eng));
-
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_RESIZABLE);
 
     if(window == NULL){
@@ -75,7 +41,6 @@ int MainSDLWindow::Init(const char *title, int x, int y){
         return EXIT_FAILURE;
     }
 
-    Draw();
     return EXIT_SUCCESS;
 }
 
@@ -83,24 +48,24 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this ->renderer;
 }
 
-void MainSDLWindow::Draw(){
-    SDL_SetRenderDrawColor(renderer,255,0,0,255);
-    SDL_RenderFillRect(renderer, &head);
-    SDL_SetRenderDrawColor(renderer,0,0,255,255); 
-    SDL_RenderFillRect(renderer, &body1); 
-    SDL_SetRenderDrawColor(renderer,100,100,255,255); 
-    SDL_RenderFillRect(renderer, &body2);  
-    SDL_RenderPresent(renderer);
+void Snake::Draw(){
+    SDL_SetRenderDrawColor(main_window->renderer,255,0,0,255);
+    SDL_RenderFillRect(main_window->renderer, &head);
+    SDL_SetRenderDrawColor(main_window->renderer,0,0,255,255); 
+    SDL_RenderFillRect(main_window->renderer, &body1); 
+    SDL_SetRenderDrawColor(main_window->renderer,100,100,255,255); 
+    SDL_RenderFillRect(main_window->renderer, &body2);  
+    SDL_RenderPresent(main_window->renderer);
 }
 
-void MainSDLWindow::refresh(){
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
+void Snake::refresh(){
+    SDL_SetRenderDrawColor(main_window->renderer, 0, 0, 0, 255);
+    SDL_RenderClear(main_window->renderer);
     Draw();
-    DrawAppel();
+    m_apple->DrawAppel();
 }
 
-void MainSDLWindow::verifKey(bool game){
+void Snake::verifKey(bool game){
     SDL_Event(event);
     while(SDL_PollEvent(&event)){
         if (event.type == SDL_QUIT) {
@@ -108,8 +73,7 @@ void MainSDLWindow::verifKey(bool game){
             continuer = false;
         }
 
-        else if (event.type == SDL_KEYDOWN){ 
-
+        else if (event.type == SDL_KEYDOWN){
             aX = head.x;
             aY = head.y;
             aX1 = body1.x;
@@ -133,7 +97,7 @@ void MainSDLWindow::verifKey(bool game){
     }
 }
 
-void MainSDLWindow::mouv(const char *dir){
+void Snake::mouv(const char *dir){
     if(dir == "up"){
         head.y-=speed;
         body1.y = aY;
@@ -174,12 +138,10 @@ void MainSDLWindow::follow(){
 }
 */
 
-void MainSDLWindow::DrawAppel(){
-    SDL_SetRenderDrawColor(renderer,255,0,0,255); 
-    SDL_RenderFillRect(renderer, &apple);  
-    SDL_RenderPresent(renderer);
-    printf("%d, %d \n", apple.x, apple.y);
-
+void Apple::DrawAppel(){
+    SDL_SetRenderDrawColor(main_window->renderer,255,0,0,255); 
+    SDL_RenderFillRect(main_window->renderer, &apple);  
+    SDL_RenderPresent(main_window->renderer);
 }
 
 int main(int argc, char *argv[]){
@@ -188,10 +150,15 @@ int main(int argc, char *argv[]){
     main_window = new MainSDLWindow();
     main_window->Init("exercice 3", 1250, 850);
 
-    while(main_window->continuer == true){
-        main_window->verifKey(true);
-    }
+    Snake *main_snake;
+    main_snake = NULL;
+    main_snake = new Snake();
 
+    while(main_snake->continuer == true){
+        main_snake->verifKey(true);
+    }
+    if (main_snake != NULL)
+        delete main_snake;
     if (main_window != NULL)
         delete main_window;
 }

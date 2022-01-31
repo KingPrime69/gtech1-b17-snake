@@ -16,9 +16,14 @@ class Snake{
     void refresh();
     void follow();
     bool continuer;
-    void DrawAppel();  
+
 
     private:
+    MainSDLWindow *main_window;
+    Apple *m_apple;
+    SDL_Rect head;
+    SDL_Rect body1;
+    SDL_Rect body2;
     int aX1; 
     int aY1;
     int aX;
