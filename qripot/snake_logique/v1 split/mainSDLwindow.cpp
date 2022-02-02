@@ -1,4 +1,4 @@
-#include "mainSDLwindow.hpp"
+#include "main.hpp"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
