@@ -1,5 +1,5 @@
-#ifndef SNAKE_HPP
-#define SNAKE_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
@@ -18,6 +18,7 @@ class MainSDLWindow{
     bool continuer;
     void handle_input();
     void show();
+    bool check_collision(SDL_Rect rect, SDL_Surface *surface); 
 
     private:
     Uint32 frame_time_interval;
@@ -27,10 +28,8 @@ class MainSDLWindow{
     int X;
     int Y;
     int w;
-    SDL_Surface *surface;
     SDL_Rect rect;
-    SDL_Rect wall;
-    SDL_Rect box;
+    SDL_Surface *surface;
     int xVel, yVel;
     SDL_Window *window;
     SDL_Renderer *renderer;

@@ -50,39 +50,39 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this ->renderer;
 }
 
-bool check_collision( SDL_Rect &B, SDL_Rect &C)
+bool MainSDLWindow::check_collision(SDL_Rect A, SDL_Surface *B)
 {
-    int leftB, leftC;
-    int rightB, rightC;
-    int topB, topC;
-    int bottomB, bottomC;
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
     
-    leftB = B.x;
-    rightB = B.x + B.w;
-    topB = B.y;
-    bottomB = B.y + B.h;
+    leftA = A.x;
+    rightA = A.x + A.w;
+    topA = A.y;
+    bottomA = A.y + A.w;
 
-    leftC = C.x;
-    rightC = C.x + C.w;
-    topC = C.y;
-    bottomC = C.y + C.h;
-
-    if(bottomB <= topC)
+    if(bottomA <= topB)
     {
+        printf("stop!");
         return false;
     }
-    if(topB >= bottomC)
+    if(topA >= bottomB)
     {
+        printf("stop!");
         return false;
     }
-    if(rightB <= leftC)
+    if(rightA <= leftB)
     {
+        printf("stop!");
         return false;
     }
-    if(leftB >= rightC)
+    if(leftA >= rightB)
     {
+        printf("stop!");
         return false;
     }
+    printf("stop!");
     return true;
 }
 
@@ -92,13 +92,13 @@ void MainSDLWindow::Draw(){
     SDL_BlitSurface(surface, NULL, surface, &rect);
     SDL_RenderPresent(renderer);
     frame_time_interval = SDL_GetTicks() - frame_time_start;
-    box.x += xVel;
-    if( ( box.x < 0 ) || ( box.x + w > 1000 ) || ( check_collision( box, wall ) ) ) {
-        box.x -= xVel;
+    rect.x += xVel;
+    if( ( rect.x < 0 ) || ( rect.x + w > 1000 ) || ( MainSDLWindow::check_collision( rect, surface ) ) ) {
+        rect.x -= xVel;
     }
-    box.y += yVel;
-    if( ( box.y < 0 ) || ( box.y + w > 1000 ) || ( check_collision( box, wall ) ) ) {
-        box.y -= yVel;
+    rect.y += yVel;
+    if( ( rect.y < 0 ) || ( rect.y + w > 1000 ) || ( check_collision( rect, surface ) ) ) {
+        rect.y -= yVel;
     }
 }
 
@@ -117,7 +117,7 @@ void MainSDLWindow::verifKey(bool game){
     SDL_PollEvent(&event);
     if (event.type == SDL_QUIT) {
         SDL_Log("Program quit after %i ticks", event.quit.timestamp);
-        printf("Je voudrai un bonhomme de neige !");
+        printf("Why are you booly me !");
         continuer = false;
     }
 
@@ -138,6 +138,7 @@ void MainSDLWindow::verifKey(bool game){
     else if(event.type == SDL_KEYUP){
             mouv(NULL);
     }
+    
 }
 
 void MainSDLWindow::mouv(const char *dir){
@@ -169,6 +170,7 @@ int main(int argc, char *argv[]){
         main_window->verifKey(true);
     }
 
-    if (main_window != NULL)
+    if (main_window != NULL){
         delete main_window;
+    }
 }
