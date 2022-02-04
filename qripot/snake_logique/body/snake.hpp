@@ -17,7 +17,7 @@ class Snake {
     void Draw();
     void Refresh();
     int InitSnake();
-    void Mouv(const char *dir);
+    void Mouv(char dir);
     Segment *head;
 
     private:

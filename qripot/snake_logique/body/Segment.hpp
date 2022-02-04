@@ -9,14 +9,14 @@
 class Segment{
     public:
         Segment *next;
-        Segment(int x, int y, const char *dir);
+        Segment(int x, int y, char dir);
         ~Segment();
         int GetX();
         int GetY();
         void SetX(int x);
         void SetY(int y);
         char GetDir();
-        void SetDirection(const char *dir);
+        void SetDirection(char dir);
         int nbSeg;
     
     private:

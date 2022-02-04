@@ -5,14 +5,18 @@
 #include <stdlib.h>
 
 #include "body/snake.hpp"
+#include "body/Segment.hpp"
 
 class Game {
     public:
-        Game();
+        Game(Snake *s, Segment *seg);
         ~Game();
-        void verifKey(bool game, Snake *s);
+        void verifKey(bool continuer);
+        bool game;
 
     private:
+        Snake *s;
+        Segment *seg;
         int aY;
         int aX;
         int aX1;

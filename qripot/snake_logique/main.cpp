@@ -15,18 +15,24 @@ int main(void){
 
     Snake *main_snake = new Snake(main_window);
     main_snake->Draw();
+    Segment *seg = new Segment(800, 300, 'U');
+    Game *game_run = new Game(main_snake, seg);
+    game_run->game = true;
+
+    while(game_run->game == true){
+        game_run->verifKey(true);
+    }
 
 
-    Game *game_run = new Game();
-    game_run->verifKey(true, main_snake);
+    if (game_run != NULL)
+        delete game_run;
 
-    SDL_Delay(2000);
+    if (seg != NULL)
+        delete seg;
         
     if (main_snake != NULL)
         delete main_snake;
 
-    if (game_run != NULL)
-        delete game_run;
 
     if (main_window != NULL)
         delete main_window;

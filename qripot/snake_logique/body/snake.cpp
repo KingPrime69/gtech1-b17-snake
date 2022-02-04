@@ -9,16 +9,13 @@ Snake::Snake(MainSDLWindow *wind){
     this->head = NULL;
     this->wind = wind;
 
-    Segment *seg = new Segment(650, 450, "up");
+    Segment *seg = new Segment(800, 300, 'U');
 
     this->head = seg;
-    if(head->next == NULL)
-        printf("WHY\n");
 
 }
 
 Snake::~Snake(){
-    printf("STOP BULLY PLSSSSSSSS\n");
 }
 
 Segment Snake::GetHead(){
@@ -26,11 +23,9 @@ Segment Snake::GetHead(){
 }
 
 void Snake::Draw(){
-    printf("Marche\n");
     Segment *temp = head;
 
     if(head == NULL){
-        printf("MERDE\n");
         return;
     }
      
@@ -47,6 +42,7 @@ void Snake::Draw(){
         }
     }
     while(temp->next != NULL);
+    return;
 
 
 /*
@@ -61,27 +57,37 @@ void Snake::Refresh(){
     SDL_SetRenderDrawColor(this->wind->GetRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(this->wind->GetRenderer());
     Draw();
+    return;
 }
 
-void Snake::Mouv(const char *dir){
-    if(dir == "up"){
-        if(head->next->GetDir() != *"down")
-            body.y-=speed;
+void Snake::Mouv(char dir){
+    if(dir == 'U'){
+        if(head->GetDir() != 'D'){
+            head->SetY(head->GetY()-10);
+            head->GetY();
             Refresh();
+        }
     }
-    else if(dir == "down"){
-        if(head->next->GetDir() != *"up")
-        body.y+=speed;
-        Refresh();
+    else if(dir == 'D'){
+        if(head->GetDir() != 'U'){
+            head->SetY(head->GetY()+10);
+            head->GetY();
+            Refresh();
+        }
     }
-    else if(dir == "left"){
-        if(head->next->GetDir() != *"right")
-        body.x-=speed;
-        Refresh();
+    else if(dir == 'L'){
+        if(head->GetDir() != 'R'){
+            head->SetX(head->GetX()-10);
+            head->GetX();
+            Refresh();
+        }
     }
-    else if(dir == "right"){
-        if(head->next->GetDir() != *"left")
-        body.x+=speed;
-        Refresh();
+    else if(dir == 'R'){
+        if(head->GetDir() != 'L'){
+            head->SetX(head->GetX()+10);
+            head->GetX();
+            Refresh();
+        }
     }
+    printf("dir : %c\n", head->GetDir());
 }

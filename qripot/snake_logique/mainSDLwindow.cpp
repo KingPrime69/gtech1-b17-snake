@@ -6,7 +6,6 @@
 #include <iostream>
 
 MainSDLWindow::MainSDLWindow(){
-    printf("constructeur\n");
     this->window = NULL;
     this->renderer = NULL;
 }
@@ -15,7 +14,6 @@ MainSDLWindow::~MainSDLWindow(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-        printf("destructeur\n");
 }
 
 int MainSDLWindow::Init(const char *title, int x, int y){

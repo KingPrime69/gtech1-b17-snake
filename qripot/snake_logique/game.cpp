@@ -6,37 +6,44 @@
 #include <random>
 #include <iostream>
 
-Game::Game(){
-    
+Game::Game(Snake *s, Segment *seg){
+    this->s = s;
+    this->seg = seg;
 }
 
 Game::~Game(){
 
 }
 
-void Game::verifKey(bool game, Snake *s){
+void Game::verifKey(bool continuer){
     SDL_Event(event);
     while(SDL_PollEvent(&event)){
         if (event.type == SDL_QUIT) {
+            printf("delete\n");
             SDL_Log("Program quit after %i ticks", event.quit.timestamp);
+            game = false;
         }
 
         else if (event.type == SDL_KEYDOWN){
             if (event.key.keysym.sym==SDLK_UP) {
-                s->Mouv("up");
+                this->seg->SetDirection('D');
+                this->s->Mouv('U');
             }
             if (event.key.keysym.sym==SDLK_DOWN) {
-                s->Mouv("down");
+                this->seg->SetDirection('U');
+                this->s->Mouv('D');
             }
             if (event.key.keysym.sym==SDLK_LEFT) {
-                s->Mouv("left");
+                this->seg->SetDirection('R');
+                this->s->Mouv('L'); 
             }
             if (event.key.keysym.sym==SDLK_RIGHT) {
-                s->Mouv("right");
+                this->seg->SetDirection('L');
+                this->s->Mouv('R');
             }
         }
         else if(event.type == SDL_KEYUP){
-                s->Mouv(NULL);
+                this->s->Mouv('N');
         }
     }
 }
