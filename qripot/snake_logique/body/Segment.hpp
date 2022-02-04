@@ -1,0 +1,25 @@
+#pragma once
+
+#include <SDL2/SDL.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define Width 50
+
+class Segment{
+    public:
+        Segment *next;
+        Segment(int x, int y, const char *dir);
+        ~Segment();
+        int GetX();
+        int GetY();
+        void SetX(int x);
+        void SetY(int y);
+        char GetDir();
+        void SetDirection(const char *dir);
+    
+    private:
+        int x;
+        int y; 
+        char dir;
+};
