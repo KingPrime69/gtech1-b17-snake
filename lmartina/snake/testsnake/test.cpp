@@ -50,7 +50,7 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this ->renderer;
 }
 
-bool MainSDLWindow::check_collision(SDL_Rect A, SDL_Surface *B)
+bool MainSDLWindow::check_collision(SDL_Rect A, SDL_Window *B)
 {
     int leftA, leftB;
     int rightA, rightB;
@@ -62,43 +62,43 @@ bool MainSDLWindow::check_collision(SDL_Rect A, SDL_Surface *B)
     topA = A.y;
     bottomA = A.y + A.w;
 
-    if(bottomA <= topB)
+    if(topA <= topB)
     {
-        printf("stop!");
+        printf("A!");
         return false;
     }
-    if(topA >= bottomB)
+    if(bottomA >= bottomB)
     {
-        printf("stop!");
+        printf("B!");
         return false;
     }
-    if(rightA <= leftB)
+    if(leftA <= leftB)
     {
-        printf("stop!");
+        printf("C!");
         return false;
     }
-    if(leftA >= rightB)
+    if(rightA >= rightB)
     {
-        printf("stop!");
+        printf("D!");
         return false;
     }
-    printf("stop!");
+    printf("i!");
     return true;
 }
 
 void MainSDLWindow::Draw(){
-    SDL_SetRenderDrawColor(renderer,255,0,0,255);
+    SDL_SetRenderDrawColor(renderer,255,100,100,255);
     SDL_RenderFillRect(renderer, &rect); 
     SDL_BlitSurface(surface, NULL, surface, &rect);
     SDL_RenderPresent(renderer);
     frame_time_interval = SDL_GetTicks() - frame_time_start;
     rect.x += xVel;
-    if( ( rect.x < 0 ) || ( rect.x + w > 1000 ) || ( MainSDLWindow::check_collision( rect, surface ) ) ) {
+    if( ( rect.x < 0 ) || ( rect.x > 1000 ) || ( MainSDLWindow::check_collision( rect, window ) ) ) {
         rect.x -= xVel;
     }
-    rect.y += yVel;
-    if( ( rect.y < 0 ) || ( rect.y + w > 1000 ) || ( check_collision( rect, surface ) ) ) {
-        rect.y -= yVel;
+    rect.y -= yVel;
+    if( ( rect.y < 0 ) || ( rect.y > 1000 ) || ( MainSDLWindow::check_collision( rect, window ) ) ) {
+        rect.x -= yVel;
     }
 }
 
@@ -138,7 +138,7 @@ void MainSDLWindow::verifKey(bool game){
     else if(event.type == SDL_KEYUP){
             mouv(NULL);
     }
-    
+     
 }
 
 void MainSDLWindow::mouv(const char *dir){

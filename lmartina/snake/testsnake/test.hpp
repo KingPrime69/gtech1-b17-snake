@@ -18,7 +18,7 @@ class MainSDLWindow{
     bool continuer;
     void handle_input();
     void show();
-    bool check_collision(SDL_Rect rect, SDL_Surface *surface); 
+    bool check_collision(SDL_Rect rect, SDL_Window *window); 
 
     private:
     Uint32 frame_time_interval;
