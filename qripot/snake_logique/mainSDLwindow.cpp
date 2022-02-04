@@ -6,6 +6,7 @@
 #include <iostream>
 
 MainSDLWindow::MainSDLWindow(){
+    printf("constructeur\n");
     this->window = NULL;
     this->renderer = NULL;
 }
@@ -14,6 +15,7 @@ MainSDLWindow::~MainSDLWindow(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+        printf("destructeur\n");
 }
 
 int MainSDLWindow::Init(const char *title, int x, int y){
@@ -22,7 +24,7 @@ int MainSDLWindow::Init(const char *title, int x, int y){
        return EXIT_FAILURE;
     }
 
-    window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_RESIZABLE);
+    this->window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_RESIZABLE);
 
     if(window == NULL){
         printf("Erreur lors de la creation d'une fenetre : %s",SDL_GetError());

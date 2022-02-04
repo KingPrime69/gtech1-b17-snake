@@ -7,13 +7,14 @@
 #include <iostream>
 
 Game::Game(){
+    
 }
 
 Game::~Game(){
 
 }
 
-void Game::verifKey(bool game, Snake s){
+void Game::verifKey(bool game, Snake *s){
     SDL_Event(event);
     while(SDL_PollEvent(&event)){
         if (event.type == SDL_QUIT) {
@@ -22,20 +23,20 @@ void Game::verifKey(bool game, Snake s){
 
         else if (event.type == SDL_KEYDOWN){
             if (event.key.keysym.sym==SDLK_UP) {
-                s.Mouv("up");
+                s->Mouv("up");
             }
             if (event.key.keysym.sym==SDLK_DOWN) {
-                s.Mouv("down");
+                s->Mouv("down");
             }
             if (event.key.keysym.sym==SDLK_LEFT) {
-                s.Mouv("left");
+                s->Mouv("left");
             }
             if (event.key.keysym.sym==SDLK_RIGHT) {
-                s.Mouv("right");
+                s->Mouv("right");
             }
         }
         else if(event.type == SDL_KEYUP){
-                s.Mouv(NULL);
+                s->Mouv(NULL);
         }
     }
 }

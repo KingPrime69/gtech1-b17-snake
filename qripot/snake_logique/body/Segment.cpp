@@ -4,6 +4,7 @@ Segment::Segment(int x, int y, const char *dir){
     this->x = x;
     this->y = y;
     this->dir = *dir;
+    this->nbSeg = 0;
     this->next = NULL;
 }
 

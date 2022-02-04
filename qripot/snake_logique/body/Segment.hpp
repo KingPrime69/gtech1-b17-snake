@@ -17,6 +17,7 @@ class Segment{
         void SetY(int y);
         char GetDir();
         void SetDirection(const char *dir);
+        int nbSeg;
     
     private:
         int x;

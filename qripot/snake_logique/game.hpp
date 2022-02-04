@@ -10,7 +10,7 @@ class Game {
     public:
         Game();
         ~Game();
-        void verifKey(bool game, Snake s);
+        void verifKey(bool game, Snake *s);
 
     private:
         int aY;

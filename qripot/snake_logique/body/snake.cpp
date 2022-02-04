@@ -5,49 +5,48 @@
 #include <random>
 #include <iostream>
 
-Snake::Snake(){
+Snake::Snake(MainSDLWindow *wind){
+    this->head = NULL;
+    this->wind = wind;
+
+    Segment *seg = new Segment(650, 450, "up");
+
+    this->head = seg;
+    if(head->next == NULL)
+        printf("WHY\n");
 
 }
 
 Snake::~Snake(){
-
+    printf("STOP BULLY PLSSSSSSSS\n");
 }
 
 Segment Snake::GetHead(){
     return *head;
 }
 
-void Snake::Draw(MainSDLWindow wind){
+void Snake::Draw(){
     printf("Marche\n");
     Segment *temp = head;
 
-    Segment *seg = new Segment(650, 450, "up");
-
-    if(head == NULL)
-    printf("MERDE\n");
+    if(head == NULL){
+        printf("MERDE\n");
         return;
-
-    if (temp->next == NULL)
-        printf("tu fais chier");
-
+    }
+     
     do{
-        printf("Z\n");
-        body.x = head->GetX();
-        printf("E\n");
-        body.y = head->GetY();
-        printf("U\n");
+        body.x = temp->GetX();
+        body.y = temp->GetY();
         body.w = Width;
-        printf("B\n");
         body.h = Width;
-        printf("I\n");
-        SDL_SetRenderDrawColor(wind.GetRenderer(),255,0,0,255);
-        SDL_RenderFillRect(wind.GetRenderer(), &body);
-        if(temp->next!=NULL)
+        SDL_SetRenderDrawColor(wind->GetRenderer(),255,0,0,255);
+        SDL_RenderFillRect(wind->GetRenderer(), &body);
+        SDL_RenderPresent(wind->GetRenderer());
+        if(temp->next!=NULL){
             temp = temp->next;
+        }
     }
     while(temp->next != NULL);
-    SDL_RenderClear(wind.GetRenderer());
-    SDL_RenderPresent(wind.GetRenderer());
 
 
 /*
@@ -58,31 +57,31 @@ void Snake::Draw(MainSDLWindow wind){
   */  
 }
 
-void Snake::Refresh(MainSDLWindow wind){
-    SDL_SetRenderDrawColor(wind.GetRenderer(), 0, 0, 0, 255);
-    SDL_RenderClear(wind.GetRenderer());
-    Draw(wind);
+void Snake::Refresh(){
+    SDL_SetRenderDrawColor(this->wind->GetRenderer(), 0, 0, 0, 255);
+    SDL_RenderClear(this->wind->GetRenderer());
+    Draw();
 }
 
 void Snake::Mouv(const char *dir){
     if(dir == "up"){
         if(head->next->GetDir() != *"down")
             body.y-=speed;
-            Refresh(wind);
+            Refresh();
     }
     else if(dir == "down"){
         if(head->next->GetDir() != *"up")
         body.y+=speed;
-        Refresh(wind);
+        Refresh();
     }
     else if(dir == "left"){
         if(head->next->GetDir() != *"right")
         body.x-=speed;
-        Refresh(wind);
+        Refresh();
     }
     else if(dir == "right"){
         if(head->next->GetDir() != *"left")
         body.x+=speed;
-        Refresh(wind);
+        Refresh();
     }
 }

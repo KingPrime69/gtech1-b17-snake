@@ -9,19 +9,19 @@
 
 class Snake {
     public:
-    Snake();
+    Snake(MainSDLWindow *wind);
     ~Snake();
     int addStart();
     Segment GetHead();
 
-    void Draw(MainSDLWindow wind);
-    void Refresh(MainSDLWindow wind);
+    void Draw();
+    void Refresh();
     int InitSnake();
     void Mouv(const char *dir);
     Segment *head;
 
     private:
-    MainSDLWindow wind;   
+    MainSDLWindow *wind;   
     SDL_Rect body;
     char dir;
     int speed;
