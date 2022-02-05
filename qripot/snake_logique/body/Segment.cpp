@@ -2,9 +2,7 @@
 
 Segment::Segment(int x, int y, char dir){
     this->x = x;
-    printf("X int: %d\n", x);
     this->y = y;
-    printf("Y int: %d\n ", y);
     this->dir = dir;
     this->nbSeg = 0;
     this->next = NULL;
@@ -33,8 +31,9 @@ int Segment::GetY(){
 }
 
 
-void Segment::SetDirection(char dir){
-    this->dir = dir;
+void Segment::SetDirOp(char ChangeDir){
+    printf("change dir to :%s\n", &ChangeDir);
+    this->dir = ChangeDir;
 }
 
 char Segment::GetDir(){

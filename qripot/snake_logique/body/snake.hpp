@@ -19,8 +19,11 @@ class Snake {
     int InitSnake();
     void Mouv(char dir);
     Segment *head;
+    void CheckBorder();
+    bool border;
 
     private:
+    int scale;
     MainSDLWindow *wind;   
     SDL_Rect body;
     char dir;

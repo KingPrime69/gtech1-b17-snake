@@ -9,7 +9,7 @@
 
 class Game {
     public:
-        Game(Snake *s, Segment *seg);
+        Game(Snake *s);
         ~Game();
         void verifKey(bool continuer);
         bool game;

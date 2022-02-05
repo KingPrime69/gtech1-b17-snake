@@ -12,6 +12,7 @@ Snake::Snake(MainSDLWindow *wind){
     Segment *seg = new Segment(800, 300, 'U');
 
     this->head = seg;
+    this->scale = 50;
 
 }
 
@@ -63,31 +64,45 @@ void Snake::Refresh(){
 void Snake::Mouv(char dir){
     if(dir == 'U'){
         if(head->GetDir() != 'D'){
-            head->SetY(head->GetY()-10);
+            head->SetY(head->GetY()-scale);
             head->GetY();
             Refresh();
+            this->head->SetDirOp('U');
         }
     }
     else if(dir == 'D'){
         if(head->GetDir() != 'U'){
-            head->SetY(head->GetY()+10);
+            head->SetY(head->GetY()+scale);
             head->GetY();
             Refresh();
+            this->head->SetDirOp('D');
         }
     }
     else if(dir == 'L'){
         if(head->GetDir() != 'R'){
-            head->SetX(head->GetX()-10);
+            head->SetX(head->GetX()-scale);
             head->GetX();
             Refresh();
+            this->head->SetDirOp('L');
         }
     }
     else if(dir == 'R'){
         if(head->GetDir() != 'L'){
-            head->SetX(head->GetX()+10);
+            head->SetX(head->GetX()+scale);
             head->GetX();
             Refresh();
+            this->head->SetDirOp('R');
         }
     }
-    printf("dir : %c\n", head->GetDir());
+    CheckBorder();
+}
+
+void Snake::CheckBorder(){
+    if(body.x > -1 && body.x < 1201 && body.y > -1 && body.y < 801){
+        border = false;
+    }
+    else{
+        printf("bordure de la map toucher, fin du jeu\n");
+        border = true;
+    }
 }

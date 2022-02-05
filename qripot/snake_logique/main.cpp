@@ -15,8 +15,7 @@ int main(void){
 
     Snake *main_snake = new Snake(main_window);
     main_snake->Draw();
-    Segment *seg = new Segment(800, 300, 'U');
-    Game *game_run = new Game(main_snake, seg);
+    Game *game_run = new Game(main_snake);
     game_run->game = true;
 
     while(game_run->game == true){
@@ -26,9 +25,6 @@ int main(void){
 
     if (game_run != NULL)
         delete game_run;
-
-    if (seg != NULL)
-        delete seg;
         
     if (main_snake != NULL)
         delete main_snake;
