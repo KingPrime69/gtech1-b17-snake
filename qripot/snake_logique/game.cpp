@@ -24,6 +24,10 @@ void Game::verifKey(bool continuer){
         }
 
         else if (event.type == SDL_KEYDOWN){
+            if (event.key.keysym.sym==SDLK_n) {
+                printf("création d'un nouveau segment\n");
+                s->AddSeg();
+            }
             if (event.key.keysym.sym==SDLK_UP) {
                 this->s->Mouv('U');
             }

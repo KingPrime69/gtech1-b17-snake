@@ -21,11 +21,17 @@ class Snake {
     Segment *head;
     void CheckBorder();
     bool border;
+    void AddSeg();
+
+    void MouvAll();
 
     private:
+    int Xpre;
+    int Ypre;
     int scale;
     MainSDLWindow *wind;   
     SDL_Rect body;
+    SDL_Rect follow;
     char dir;
     int speed;
 };

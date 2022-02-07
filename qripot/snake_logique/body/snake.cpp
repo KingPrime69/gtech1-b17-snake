@@ -23,15 +23,20 @@ Segment Snake::GetHead(){
     return *head;
 }
 
+void Snake::AddSeg(){
+    Segment *newBody = new Segment(Xpre, Ypre, head->GetDir());
+    newBody->next = head;
+    head = newBody;
+}
+
 void Snake::Draw(){
     Segment *temp = head;
-
     if(head == NULL){
         return;
     }
-     
+
     do{
-        body.x = temp->GetX();
+        body.x = temp-> GetX();
         body.y = temp->GetY();
         body.w = Width;
         body.h = Width;
@@ -58,14 +63,14 @@ void Snake::Refresh(){
     SDL_SetRenderDrawColor(this->wind->GetRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(this->wind->GetRenderer());
     Draw();
-    return;
 }
 
 void Snake::Mouv(char dir){
+    Xpre = body.x;
+    Ypre = body.y;
     if(dir == 'U'){
         if(head->GetDir() != 'D'){
             head->SetY(head->GetY()-scale);
-            head->GetY();
             Refresh();
             this->head->SetDirOp('U');
         }
@@ -73,7 +78,6 @@ void Snake::Mouv(char dir){
     else if(dir == 'D'){
         if(head->GetDir() != 'U'){
             head->SetY(head->GetY()+scale);
-            head->GetY();
             Refresh();
             this->head->SetDirOp('D');
         }
@@ -81,7 +85,6 @@ void Snake::Mouv(char dir){
     else if(dir == 'L'){
         if(head->GetDir() != 'R'){
             head->SetX(head->GetX()-scale);
-            head->GetX();
             Refresh();
             this->head->SetDirOp('L');
         }
@@ -89,11 +92,11 @@ void Snake::Mouv(char dir){
     else if(dir == 'R'){
         if(head->GetDir() != 'L'){
             head->SetX(head->GetX()+scale);
-            head->GetX();
             Refresh();
             this->head->SetDirOp('R');
         }
     }
+    MouvAll();
     CheckBorder();
 }
 
@@ -105,4 +108,30 @@ void Snake::CheckBorder(){
         printf("bordure de la map toucher, fin du jeu\n");
         border = true;
     }
+}
+
+void Snake::MouvAll(){
+    Segment *temp = head;
+    if (head == NULL){
+        return;
+    }
+
+
+    do{
+        if(dir == 'U' || dir == 'D'){
+            if(dir == 'U')
+                temp->SetX(temp->GetX()-scale);
+            if(dir == 'D')
+                temp->SetX(temp->GetX()+scale);
+        }
+        else if(dir == 'L' || dir == 'R'){
+            if(dir == 'L')
+                temp->SetY(temp->GetY()-scale);
+            if(dir == 'R')
+                temp->SetY(temp->GetY()+scale);
+        }
+        if(temp->next!=NULL){
+            temp = temp->next;
+        }
+    }while(temp->next != NULL);
 }

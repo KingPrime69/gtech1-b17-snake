@@ -6,6 +6,7 @@ Segment::Segment(int x, int y, char dir){
     this->dir = dir;
     this->nbSeg = 0;
     this->next = NULL;
+    this->prev = NULL;
 }
 
 Segment::~Segment(){
@@ -32,7 +33,6 @@ int Segment::GetY(){
 
 
 void Segment::SetDirOp(char ChangeDir){
-    printf("change dir to :%s\n", &ChangeDir);
     this->dir = ChangeDir;
 }
 

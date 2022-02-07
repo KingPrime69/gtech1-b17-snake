@@ -9,6 +9,7 @@
 class Segment{
     public:
         Segment *next;
+        Segment *prev;
         Segment(int x, int y, char dir);
         ~Segment();
         int GetX();
