@@ -15,6 +15,7 @@ int main(void){
 
     Snake *main_snake = new Snake(main_window);
     main_snake->Draw();
+
     Game *game_run = new Game(main_snake);
     game_run->game = true;
 
@@ -33,9 +34,6 @@ int main(void){
     if (main_window != NULL)
         delete main_window;
 
-
-    // if (seg != NULL)
-    //     delete seg;
 
 }
 

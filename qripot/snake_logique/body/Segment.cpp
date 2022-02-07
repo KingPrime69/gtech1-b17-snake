@@ -1,26 +1,21 @@
 #include "Segment.hpp"
 
-Segment::Segment(int x, int y, char dir){
-    this->x = x;
-    this->y = y;
-    this->dir = dir;
-    this->nbSeg = 0;
+Segment::Segment(int x_, int y_, char dir_){
+    this->x = x_;
+    this->y = y_;
+    this->dir = dir_;
     this->next = NULL;
-    this->prev = NULL;
 }
 
 Segment::~Segment(){
-    this->x=0;
-    this->y=0;
-    this->dir = *"";
 }
 
-void Segment::SetX(int x){
-    this->x = x;
+void Segment::SetX(int x_){
+    this->x = x_;
 }
 
-void Segment::SetY(int y){
-    this->y = y;
+void Segment::SetY(int y_){
+    this->y = y_;
 }
 
 int Segment::GetX(){
@@ -33,9 +28,19 @@ int Segment::GetY(){
 
 
 void Segment::SetDirOp(char ChangeDir){
-    this->dir = ChangeDir;
+    this->ChangeDir = ChangeDir;
+}
+
+char Segment::GetDirOp(){
+    return this->ChangeDir;
+}
+
+char Segment::SetDir(char dir){
+    this->dir = dir;
+    printf("SetDir : %c\n", dir);
 }
 
 char Segment::GetDir(){
     return this->dir;
 }
+

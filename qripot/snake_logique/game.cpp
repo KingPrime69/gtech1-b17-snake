@@ -29,20 +29,21 @@ void Game::verifKey(bool continuer){
                 s->AddSeg();
             }
             if (event.key.keysym.sym==SDLK_UP) {
-                this->s->Mouv('U');
+                this->s->head->SetDir('U');
+                this->s->Mouv();
             }
             if (event.key.keysym.sym==SDLK_DOWN) {
-                this->s->Mouv('D');
+                this->s->head->SetDir('D');
+                this->s->Mouv();
             }
             if (event.key.keysym.sym==SDLK_LEFT) {
-                this->s->Mouv('L'); 
+                this->s->head->SetDir('L');
+                this->s->Mouv(); 
             }
             if (event.key.keysym.sym==SDLK_RIGHT) {
-                this->s->Mouv('R');
+                this->s->head->SetDir('R');
+                this->s->Mouv();
             }
-        }
-        else if(event.type == SDL_KEYUP){
-                this->s->Mouv('N');
         }
     }
 }

@@ -9,16 +9,18 @@
 
 class Snake {
     public:
+    
+    Segment *head;
+    
     Snake(MainSDLWindow *wind);
     ~Snake();
+
     int addStart();
     Segment GetHead();
-
     void Draw();
     void Refresh();
     int InitSnake();
-    void Mouv(char dir);
-    Segment *head;
+    void Mouv();
     void CheckBorder();
     bool border;
     void AddSeg();
@@ -26,12 +28,12 @@ class Snake {
     void MouvAll();
 
     private:
+    char DirPre;
     int Xpre;
     int Ypre;
     int scale;
     MainSDLWindow *wind;   
     SDL_Rect body;
     SDL_Rect follow;
-    char dir;
     int speed;
 };

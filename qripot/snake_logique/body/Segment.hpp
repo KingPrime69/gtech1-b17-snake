@@ -9,7 +9,6 @@
 class Segment{
     public:
         Segment *next;
-        Segment *prev;
         Segment(int x, int y, char dir);
         ~Segment();
         int GetX();
@@ -18,9 +17,11 @@ class Segment{
         void SetY(int y);
         char GetDir();
         void SetDirOp(char ChangeDir);
-        int nbSeg;
+        char SetDir(char dir);
+        char GetDirOp();
     
     private:
+        char ChangeDir;
         int x;
         int y; 
         char dir;
