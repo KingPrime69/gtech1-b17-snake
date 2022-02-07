@@ -25,11 +25,9 @@ Segment Snake::GetHead(){
 }
 
 void Snake::AddSeg(){
-    Segment *newBody = new Segment(Xpre, Ypre, DirPre);
+    Segment *newBody = new Segment(Xpre, Ypre, head->GetDir());
     newBody->next = head;
     head = newBody;
-
-    printf("en boucle\n");
 }
 
 void Snake::Draw(){
@@ -37,6 +35,7 @@ void Snake::Draw(){
     if(head == NULL){
         return;
     }
+        
 
     do{
         body.x = temp->GetX();
@@ -69,10 +68,8 @@ void Snake::Refresh(){
 }
 
 void Snake::Mouv(){
-    Xpre = head->GetX();
-    Ypre = head->GetY();
-    DirPre = head->GetDir();
-
+    Xpre = head->TakeX();
+    Ypre = head->TakeY();
     Segment *temp = head;
     if (head == NULL){
         return;
@@ -82,28 +79,29 @@ void Snake::Mouv(){
         if(temp->GetDir() == 'U'){
             if(temp->GetDirOp() != 'D'){
             temp->SetY(temp->GetY()-scale);
-            this->head->SetDirOp('U');
             }
         }
         if(temp->GetDir() == 'D'){
             if(temp->GetDirOp() != 'U'){
                 temp->SetY(temp->GetY()+scale);
-                this->head->SetDirOp('D');
+               //head->SetDirOp('D');
             }
         }
         if(temp->GetDir() == 'L'){
             if(temp->GetDirOp() != 'R'){
                 temp->SetX(temp->GetX()-scale);
-                this->head->SetDirOp('L');
+                //head->SetDirOp('L');
             }
         }
         if(temp->GetDir() == 'R'){
             if(temp->GetDirOp() != 'L'){
                 temp->SetX(temp->GetX()+scale);
-                this->head->SetDirOp('R');
+                //head->SetDirOp('R');
             }
         }
         if(temp->next!=NULL){
+            temp->next->SetDir(temp->GetDir());
+            temp->next->SetDirOp(temp->GetDirOp());
             temp = temp->next;
         }
     }while(temp->next != NULL);
@@ -143,7 +141,6 @@ void Snake::CheckBorder(){
         border = false;
     }
     else{
-        printf("bordure de la map toucher, fin du jeu\n");
         border = true;
     }
 }

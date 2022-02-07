@@ -17,10 +17,15 @@ class Segment{
         void SetY(int y);
         char GetDir();
         void SetDirOp(char ChangeDir);
-        char SetDir(char dir);
+        void SetDir(char dir);
         char GetDirOp();
+
+        int TakeX();
+        int TakeY();
     
     private:
+        int Xpre;
+        int Ypre;
         char ChangeDir;
         int x;
         int y; 

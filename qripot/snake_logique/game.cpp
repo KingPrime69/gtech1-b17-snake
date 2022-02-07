@@ -31,18 +31,26 @@ void Game::verifKey(bool continuer){
             if (event.key.keysym.sym==SDLK_UP) {
                 this->s->head->SetDir('U');
                 this->s->Mouv();
+                if(this->s->head->GetDirOp() != 'D')
+                    this->s->head->SetDirOp('U');
             }
             if (event.key.keysym.sym==SDLK_DOWN) {
                 this->s->head->SetDir('D');
                 this->s->Mouv();
+                if(this->s->head->GetDirOp() != 'U')
+                    this->s->head->SetDirOp('D');
             }
             if (event.key.keysym.sym==SDLK_LEFT) {
                 this->s->head->SetDir('L');
                 this->s->Mouv(); 
+                if(this->s->head->GetDirOp() != 'R')
+                    this->s->head->SetDirOp('L');
             }
             if (event.key.keysym.sym==SDLK_RIGHT) {
                 this->s->head->SetDir('R');
                 this->s->Mouv();
+                if(this->s->head->GetDirOp() != 'L')
+                    this->s->head->SetDirOp('R');
             }
         }
     }
