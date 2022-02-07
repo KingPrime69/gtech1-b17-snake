@@ -1,17 +1,20 @@
 #include "test.hpp"
 #include <SDL2/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 MainSDLWindow::MainSDLWindow(){
     this->window = NULL;
     this->renderer = NULL;
+    this->font = NULL;
 }
 
 MainSDLWindow::~MainSDLWindow(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    TTF_Quit();
 }
 
 int MainSDLWindow::Init(const char *title, int x, int y){
@@ -41,6 +44,10 @@ int MainSDLWindow::Init(const char *title, int x, int y){
         printf("Erreur lors de la creation d'un renderer : %s\n",SDL_GetError());
         return EXIT_FAILURE;
     }
+    if(font == NULL){
+	    fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+	    exit(EXIT_FAILURE);
+}
 
     Draw();
     return EXIT_SUCCESS;
@@ -50,55 +57,18 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this ->renderer;
 }
 
-bool MainSDLWindow::check_collision(SDL_Rect A, SDL_Window *B)
-{
-    int leftA, leftB;
-    int rightA, rightB;
-    int topA, topB;
-    int bottomA, bottomB;
-    
-    leftA = A.x;
-    rightA = A.x + A.w;
-    topA = A.y;
-    bottomA = A.y + A.w;
-
-    if(topA <= topB)
-    {
-        printf("A!");
-        return false;
-    }
-    if(bottomA >= bottomB)
-    {
-        printf("B!");
-        return false;
-    }
-    if(leftA <= leftB)
-    {
-        printf("C!");
-        return false;
-    }
-    if(rightA >= rightB)
-    {
-        printf("D!");
-        return false;
-    }
-    printf("i!");
-    return true;
-}
-
 void MainSDLWindow::Draw(){
-    SDL_SetRenderDrawColor(renderer,255,100,100,255);
+    SDL_SetRenderDrawColor(renderer,255,255,100,255);
     SDL_RenderFillRect(renderer, &rect); 
     SDL_BlitSurface(surface, NULL, surface, &rect);
     SDL_RenderPresent(renderer);
     frame_time_interval = SDL_GetTicks() - frame_time_start;
-    rect.x += xVel;
-    if( ( rect.x < 0 ) || ( rect.x > 1000 ) || ( MainSDLWindow::check_collision( rect, window ) ) ) {
-        rect.x -= xVel;
-    }
-    rect.y -= yVel;
-    if( ( rect.y < 0 ) || ( rect.y > 1000 ) || ( MainSDLWindow::check_collision( rect, window ) ) ) {
-        rect.x -= yVel;
+    if(TTF_Init != 0){
+        font = TTF_OpenFont("Sometime.otf", 12);
+	    SDL_Color noir = {255, 0, 0};
+	    SDL_Surface* texte = TTF_RenderText_Blended(font, "score",noir);
+	    SDL_FreeSurface(texte);
+        TTF_CloseFont(font);
     }
 }
 
