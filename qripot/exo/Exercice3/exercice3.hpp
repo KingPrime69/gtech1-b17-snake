@@ -26,7 +26,7 @@ class MainSDLWindow{
     int Y;
     int w;
     SDL_Surface *surface;
-    SDL_Rect rect;
+    SDL_Rect head;
     SDL_Window *window;
     SDL_Renderer *renderer;
 };
