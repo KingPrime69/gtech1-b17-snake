@@ -25,7 +25,25 @@ Segment Snake::GetHead(){
 }
 
 void Snake::AddSeg(){
-    Segment *newBody = new Segment(Xpre, Ypre, head->GetDir());
+
+    int Xpos = head->GetX();
+    int Ypos = head->GetY();
+
+    if(head->GetDir() == 'U'){
+        Ypos += scale;
+    }
+    if(head->GetDir() == 'D'){
+        Ypos -= scale;
+    }
+    if(head->GetDir() == 'L'){
+        Xpos += scale;
+    }
+    if(head->GetDir() == 'R'){
+        Xpos -= scale;
+    }
+    Segment *newBody = new Segment(Xpos, Ypos, head->GetDir());
+    newBody->SetX(Xpos);
+    newBody->SetY(Ypos);
     newBody->next = head;
     head = newBody;
 }
@@ -35,7 +53,6 @@ void Snake::Draw(){
     if(head == NULL){
         return;
     }
-        
 
     do{
         body.x = temp->GetX();
@@ -68,17 +85,16 @@ void Snake::Refresh(){
 }
 
 void Snake::Mouv(){
-    Xpre = head->TakeX();
-    Ypre = head->TakeY();
     Segment *temp = head;
     if (head == NULL){
         return;
     }
+
  
     do{
         if(temp->GetDir() == 'U'){
             if(temp->GetDirOp() != 'D'){
-            temp->SetY(temp->GetY()-scale);
+                temp->SetY(temp->GetY()-scale);
             }
         }
         if(temp->GetDir() == 'D'){
@@ -99,11 +115,35 @@ void Snake::Mouv(){
                 //head->SetDirOp('R');
             }
         }
+
+
         if(temp->next!=NULL){
             temp->next->SetDir(temp->GetDir());
             temp->next->SetDirOp(temp->GetDirOp());
+
+                int Xpos = temp->GetX();
+                int Ypos = temp->GetY();
+
+            if(temp->GetDir() == 'U' || temp->GetDir() == 'D'){
+                if(temp->GetDirOp() == 'L' || temp->GetDirOp() == 'R'){
+                    temp->next->SetY(Ypos);
+                }
+                else{
+                    temp->next->SetX(Xpos);
+                }
+            }
+            else if(temp->GetDir() == 'L' || temp->GetDir() == 'R'){
+                if(temp->GetDirOp() == 'U' || temp->GetDirOp() == 'D'){
+                    temp->next->SetX(Xpos);
+                }
+                else{
+                    temp->next->SetY(Ypos);
+                }
+            }
+
             temp = temp->next;
         }
+        
     }while(temp->next != NULL);
     Refresh();
     /*if(head->GetDir() == 'U'){

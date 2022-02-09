@@ -5,6 +5,7 @@ Segment::Segment(int x_, int y_, char dir_){
     this->y = y_;
     this->dir = dir_;
     this->next = NULL;
+    this->prev = NULL;
 }
 
 Segment::~Segment(){
