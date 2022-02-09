@@ -1,0 +1,126 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class Game {
+	+Game(Snake* s)
+	+~Game()
+	-seg : Segment*
+	-s : Snake*
+	+game : bool
+	-pause : bool
+	-aX : int
+	-aX1 : int
+	-aY : int
+	-aY1 : int
+	+verifKey(bool continuer) : void
+}
+
+
+class MainSDLWindow {
+	+MainSDLWindow()
+	+~MainSDLWindow()
+	+GetRenderer() : SDL_Renderer*
+	-renderer : SDL_Renderer*
+	-window : SDL_Window*
+	+Init(const char* title, int x, int y) : int
+}
+
+
+class Segment {
+	+Segment(int x, int y, char dir)
+	+~Segment()
+	+next : Segment*
+	+prev : Segment*
+	-ChangeDir : char
+	+GetDir() : char
+	+GetDirOp() : char
+	-dir : char
+	+GetX() : int
+	+GetY() : int
+	+TakeX() : int
+	+TakeY() : int
+	-Xpre : int
+	-Ypre : int
+	-x : int
+	-y : int
+	+SetDir(char dir) : void
+	+SetDirOp(char ChangeDir) : void
+	+SetX(int x) : void
+	+SetY(int y) : void
+}
+
+
+class Snake {
+	+Snake(MainSDLWindow* wind)
+	+~Snake()
+	-wind : MainSDLWindow*
+	+BG() : SDL_Rect
+	-apple : SDL_Rect
+	-background : SDL_Rect
+	-body : SDL_Rect
+	+GetHead() : Segment
+	+head : Segment*
+	+border : bool
+	+eat : bool
+	-self : bool
+	-DirPre : char
+	+InitSnake() : int
+	-Xpre : int
+	-Ypre : int
+	+addStart() : int
+	-countX : int
+	-countY : int
+	+getLen() : int
+	-pW : int
+	-rand_apple : int
+	-scale : int
+	+AddSeg() : void
+	+CheckBorder() : void
+	+DeleteSeg(int segmentpos) : void
+	+Draw() : void
+	+Mouv() : void
+	+Refresh() : void
+	+random() : void
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+
+
+
+/' Aggregation relationships '/
+
+.Game o-- .Segment
+
+
+.Game o-- .Snake
+
+
+.Segment "2" o-- .Segment
+
+
+.Snake o-- .MainSDLWindow
+
+
+.Snake o-- .Segment
+
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml
+

@@ -35,6 +35,7 @@ int MainSDLWindow::Init(const char *title, int x, int y){
         printf("Erreur lors de la creation d'un renderer : %s\n",SDL_GetError());
         return EXIT_FAILURE;
     }
+
     return EXIT_SUCCESS;
 }
 

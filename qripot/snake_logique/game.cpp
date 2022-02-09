@@ -9,6 +9,7 @@
 Game::Game(Snake *s)
 {
     this->s = s;
+    pause = true;
 }
 
 Game::~Game()
@@ -53,9 +54,15 @@ void Game::verifKey(bool continuer)
                     return;
                 this->s->head->SetDir('R');
             }
+            if (event.key.keysym.sym == SDLK_p)
+            {
+                pause = !pause;
+            }
+
         }
-        if(s->eat == true)
-            s->random();
     }
-    this->s->Mouv();
+    if(pause == true)
+        this->s->Mouv();
+    s->CheckCol();
+    s->Refresh();
 }

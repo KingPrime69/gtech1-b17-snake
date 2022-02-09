@@ -6,7 +6,7 @@
 
 #include "Segment.hpp"
 #include "../mainSDLwindow.hpp"
-#include "../apple.hpp"
+
 
 class Snake{
     public:
@@ -16,39 +16,28 @@ class Snake{
     Snake(MainSDLWindow *wind);
     ~Snake();
 
-    int addStart();
-    Segment GetHead();
     void Draw();
     void Refresh();
-    int InitSnake();
     void Mouv();
-    void CheckBorder();
-    bool border;
     void AddSeg();
     void DeleteSeg(int segmentpos);
     int getLen();
 
     void random();
-    bool eat;
+    void CheckCol();
 
-    SDL_Rect BG();
+    bool border;
 
     private:
-    char DirPre;
-    int Xpre;
-    int Ypre;
     int scale;
     MainSDLWindow *wind;   
     SDL_Rect body;
-    SDL_Rect follow;
-    int speed;
     SDL_Rect background;
 
     SDL_Rect apple;
+    bool eat;
     int pW;
-
-    bool self;
-
     int countX;
     int countY;
+    int rand_apple;
 };

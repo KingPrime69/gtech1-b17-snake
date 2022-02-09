@@ -8,7 +8,7 @@
 #include <random>
 #include <iostream>
 
-#define FPSLimit 122
+#define FPSLimit  152
 
 void SDL_Limit_FPS(unsigned int limit, int FPS)
 {

@@ -17,8 +17,5 @@ class Game {
     private:
         Snake *s;
         Segment *seg;
-        int aY;
-        int aX;
-        int aX1;
-        int aY1;
+        bool pause;
 };
