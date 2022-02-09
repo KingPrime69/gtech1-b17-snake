@@ -5,9 +5,20 @@ Segment::Segment(int x_, int y_, char dir_){
     this->y = y_;
     this->dir = dir_;
     this->next = NULL;
+    this->prev = NULL;
 }
 
 Segment::~Segment(){
+}
+
+int Segment::TakeX(){
+    this->Xpre = x;
+    return Xpre;
+}
+
+int Segment::TakeY(){
+    this->Ypre = y;
+    return Ypre;
 }
 
 void Segment::SetX(int x_){
@@ -35,9 +46,8 @@ char Segment::GetDirOp(){
     return this->ChangeDir;
 }
 
-char Segment::SetDir(char dir){
+void Segment::SetDir(char dir){
     this->dir = dir;
-    printf("SetDir : %c\n", dir);
 }
 
 char Segment::GetDir(){
