@@ -1,20 +1,17 @@
 #include "test.hpp"
 #include <SDL2/SDL.h>
-#include <SDL/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 MainSDLWindow::MainSDLWindow(){
     this->window = NULL;
     this->renderer = NULL;
-    this->font = NULL;
 }
 
 MainSDLWindow::~MainSDLWindow(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    TTF_Quit();
 }
 
 int MainSDLWindow::Init(const char *title, int x, int y){
@@ -28,7 +25,7 @@ int MainSDLWindow::Init(const char *title, int x, int y){
     X=500;
     Y=500;
     w=50;
-    speed = 5;
+    speed = 10;
     rect = {X, Y, w, w};
 
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x, y, SDL_WINDOW_RESIZABLE);
@@ -44,11 +41,6 @@ int MainSDLWindow::Init(const char *title, int x, int y){
         printf("Erreur lors de la creation d'un renderer : %s\n",SDL_GetError());
         return EXIT_FAILURE;
     }
-    if(font == NULL){
-	    fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-	    exit(EXIT_FAILURE);
-}
-
     Draw();
     return EXIT_SUCCESS;
 }
@@ -58,23 +50,26 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
 }
 
 void MainSDLWindow::Draw(){
-    SDL_SetRenderDrawColor(renderer,255,255,100,255);
+    SDL_SetRenderDrawColor(renderer,0,100,100,255);
     SDL_RenderFillRect(renderer, &rect); 
     SDL_BlitSurface(surface, NULL, surface, &rect);
     SDL_RenderPresent(renderer);
     frame_time_interval = SDL_GetTicks() - frame_time_start;
-    if(TTF_Init != 0){
-        font = TTF_OpenFont("Sometime.otf", 12);
-	    SDL_Color noir = {255, 0, 0};
-	    SDL_Surface* texte = TTF_RenderText_Blended(font, "score",noir);
-	    SDL_FreeSurface(texte);
-        TTF_CloseFont(font);
+    Background();
+    }
+
+void MainSDLWindow::Background(){
+    SDL_SetRenderDrawColor(renderer,24, 55, 23, 255);
+    SDL_RenderClear(renderer);
+    for(int COUNT; COUNT<26; COUNT++){
+        SDL_SetRenderDrawColor(renderer, 165, 245, 254, SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawRect(renderer, &rect);
+        SDL_RenderPresent(renderer);
     }
 }
 
 void MainSDLWindow::refresh(){
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
+    Background();
     Draw();
 }
 
@@ -95,13 +90,13 @@ void MainSDLWindow::verifKey(bool game){
         if (event.key.keysym.sym==SDLK_UP) {
             mouv("up");
         }
-        if (event.key.keysym.sym==SDLK_DOWN) {
+        else if (event.key.keysym.sym==SDLK_DOWN) {
             mouv("down");
         }
-        if (event.key.keysym.sym==SDLK_LEFT) {
+        else if (event.key.keysym.sym==SDLK_LEFT) {
             mouv("left");
         }
-        if (event.key.keysym.sym==SDLK_RIGHT) {
+        else if (event.key.keysym.sym==SDLK_RIGHT) {
             mouv("right");
         }
     }
@@ -134,7 +129,7 @@ int main(int argc, char *argv[]){
     MainSDLWindow *main_window;
     main_window = NULL;
     main_window = new MainSDLWindow();
-    main_window->Init("Snake", 1000, 1000);
+    main_window->Init("Snake", 1250, 850);
 
     while(main_window->continuer == true){
         main_window->verifKey(true);
